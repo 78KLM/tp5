@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,6 +14,11 @@ class ContactController extends AbstractController
      */
     public function listeContact(): Response
     {
-        return $this->render('contact/listeContacts.html.twig');
+        $manager=$this->getDoctrine()->getManager();
+        $repo=$manager->getRepository(Contact::class);
+        $Contacts=$repo->findAll();
+        return $this->render('contact/listeContacts.html.twig',[
+            'lesContacts' => $Contacts
+        ]);
     }
 }
